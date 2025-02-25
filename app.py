@@ -4,10 +4,12 @@ import tempfile
 import gc
 import base64
 import time
-
 from crewai import Agent, Crew, Process, Task
 from crewai_tools import SerperDevTool
 from src.agentic_rag.tools.custom_tool import DocumentSearchTool
+
+from dotenv import load_dotenv
+load_dotenv()
 
 # ===========================
 #   Define Agents & Tasks
@@ -169,6 +171,7 @@ if prompt:
         with st.spinner("Thinking..."):
             inputs = {"query": prompt}
             result = st.session_state.crew.kickoff(inputs=inputs).raw
+            model="openai/gpt-3.5-turbo"
         
         # Split by lines first to preserve code blocks and other markdown
         lines = result.split('\n')
